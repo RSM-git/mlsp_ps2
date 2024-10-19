@@ -54,9 +54,9 @@ if PLOT_SPECTROGRAMS:
 
 # lms
 mu_lms = 0.001
-L = 10
+L = 64
 
-noise_estimate, _ = lms(noisy_speech, noise, L, mu_lms)
+noise_estimate, _ = lms(noise, noisy_speech, L, mu_lms)
 
 play_sound(noisy_speech-noise_estimate)
 
@@ -67,12 +67,11 @@ plt.show()
 
 mu_nlms = 0.005
 delta = 1e-2
-L = 10
+L = 64
 
-noise_estimate_nlms, _ = nlms(noisy_speech, noise, L, mu_nlms, delta)
+noise_estimate_nlms, _ = nlms(noise, noisy_speech, L, mu_nlms, delta)
 
-sd.play(noisy_speech-noise_estimate_nlms, fs)
-sd.wait()
+play_sound(noisy_speech-noise_estimate_nlms)
 
 spectrogram(noisy_speech-noise_estimate_nlms, "NLMS filtered signal")
 plt.show()
@@ -80,13 +79,12 @@ plt.show()
 # rls
 
 rls_beta = 0.9999
-rls_lambda = 1e8
-L = 10
+rls_lambda = 1e2
+L = 64
 
-noise_estimate_rls, _ = rls(noisy_speech, noise, L, rls_beta, rls_lambda)
+noise_estimate_rls, _ = rls(noise, noisy_speech, L, rls_beta, rls_lambda)
 
-sd.play(noisy_speech-noise_estimate_rls, fs)
-sd.wait()
+play_sound(noisy_speech-noise_estimate_rls)
 
 spectrogram(noisy_speech-noise_estimate_rls, "RLS filtered signal")
 plt.show()
