@@ -9,8 +9,8 @@ import matplotlib.pyplot as plt
 
 from adaptive_filtering_algorithms import lms, nlms, rls, mse
 
-PLAY_SPEECH = 0
-PLOT_SPECTROGRAMS = 0
+PLAY_SPEECH = 1
+PLOT_SPECTROGRAMS = 1
 
 repeats = 5
 
@@ -20,8 +20,8 @@ L = 64
 
 mu_lms = 0.01
 
-mu_nlms = 0.05
-delta = 1e-1
+mu_nlms = 0.1
+delta = 1e-4
 
 rls_beta = 0.999
 rls_lambda = 1
@@ -47,7 +47,7 @@ hpir = loadmat("problem2_7_hpir.mat")["hpir"].flatten()
 lms_mses, nlms_mses, rls_mses = [], [], []
 
 for _ in range(repeats):
-    noise = np.random.normal(loc=0, scale=0.2, size=len(speech))
+    noise = np.random.normal(loc=0, scale=0.8, size=len(speech))
 
     filtered_noise = signal.lfilter(lpir, 1, noise)
 
@@ -81,7 +81,7 @@ if PLAY_SPEECH:
 
     play_sound(noisy_speech)
 
-    play_sound(lms_denoisd_speech)
+    play_sound(lms_denoised_speech)
 
     play_sound(nlms_denoised_speech)
 
